@@ -1,6 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
-
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSizes } from "../cocktails-old/useSizes";
+import { useCreateCocktail } from "./useCreateCocktail";
+import { useEditCocktail } from "./useEditCocktail";
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
@@ -8,25 +10,43 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 
-import { useForm } from "react-hook-form";
-
-import { useCreateCocktail } from "./useCreateCocktail";
-import { useEditCocktail } from "./useEditCocktail";
-
-// const Checkbox = ({ id }) => <Input type="checkbox" id={id} />;
-
 function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
-  const { id: editId, ...editValues } = cocktailToEdit;
-
+  const { id: editId, cocktail_sizes, ...editValues } = cocktailToEdit;
   const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
 
-  const { errors } = formState;
+  const { sizes } = useSizes();
 
-  // Create and Edit cocktails hooks
+  const [sizesData, setSizesData] = useState([]);
+
+  useEffect(() => {
+    if (isEditSession && cocktail_sizes) {
+      setSizesData(
+        cocktail_sizes.map((cs) => ({
+          size_id: cs.sizes.id,
+          price: cs.price,
+          available: cs.available,
+        }))
+      );
+    }
+  }, [isEditSession, cocktail_sizes]);
+
+  function handleSizeChange(size_id, field, value) {
+    setSizesData((prev) => {
+      const updated = prev.filter((s) => s.size_id !== size_id);
+      const currentSize = prev.find((s) => s.size_id === size_id) || {
+        size_id,
+        price: 0,
+        available: true,
+      };
+      updated.push({ ...currentSize, [field]: value });
+      return updated;
+    });
+  }
+
   const { isCreating, createCocktail } = useCreateCocktail();
   const { isEditing, editCocktail } = useEditCocktail();
 
@@ -36,120 +56,126 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
     const image_url =
       typeof data.image_url === "string" ? data.image_url : data.image_url[0];
 
-    if (isEditSession)
+    if (isEditSession) {
       editCocktail(
-        { newCocktailData: { ...data, image_url }, id: editId },
-        {
-          onSuccess: () => {
-            reset();
-            onCloseModal?.();
-          },
-        }
+        { newCocktailData: { ...data, image_url }, id: editId, sizesData },
+        { onSuccess: onCloseModal }
       );
-    else
+    } else {
       createCocktail(
-        { ...data, image_url },
-        {
-          onSuccess: () => {
-            reset();
-            onCloseModal?.();
-          },
-        }
+        { ...data, image_url, sizesData },
+        { onSuccess: onCloseModal }
       );
+    }
   }
+
   return (
     <Form
       onSubmit={handleSubmit(onSubmit)}
       type={onCloseModal ? "modal" : "regular"}
     >
-      <FormRow label="Cocktail name" error={errors?.name?.message}>
-        <Input
-          type="text"
-          id="name"
-          disabled={isWorking}
-          {...register("name", {
-            required: "Cocktail name is required",
-          })}
-        />
+      <FormRow label="Cocktail name">
+        <Input disabled={isWorking} {...register("name", { required: true })} />
       </FormRow>
 
-      <FormRow label="Description" error={errors?.description?.message}>
+      <FormRow label="Description">
         <Textarea
-          id="description"
           disabled={isWorking}
-          defaultValue=""
-          {...register("description", {
-            required: "Cocktail description is required",
-          })}
+          {...register("description", { required: true })}
         />
       </FormRow>
 
-      <FormRow
-        label="Alcohol Percentage"
-        error={errors?.alcohol_percentage?.message}
-      >
+      <FormRow label="Alcohol Percentage">
         <Input
           type="number"
-          id="alcohol_percentage"
           disabled={isWorking}
-          // defaultValue={0}
-          {...register("alcohol_percentage", {
-            required: "Cocktail alcohol is required",
-            validate: (value) =>
-              (value >= 0 && value <= 50) || "Alcohol must be between 0 and 50",
-          })}
+          {...register("alcohol_percentage", { required: true })}
         />
       </FormRow>
 
       <FormRow label="Cocktail photo">
         <FileInput
-          id="image_url"
           disabled={isWorking}
           accept="image/*"
-          {...register("image_url", {
-            required: isEditSession ? false : "Cocktail Image is required",
-          })}
+          {...register("image_url", { required: !isEditSession })}
         />
       </FormRow>
 
-      {/* Agregar los campos de tipo checkbox */}
-      <FormRow
-        label="Version 00"
-        error={errors?.has_non_alcoholic_version?.message}
-      >
+      <FormRow label="Version 00">
         <Input
           type="checkbox"
-          id="has_non_alcoholic_version"
           disabled={isWorking}
           {...register("has_non_alcoholic_version")}
         />
       </FormRow>
 
-      <FormRow label="Is Available" error={errors?.is_available?.message}>
+      <FormRow label="Is Available">
         <Input
           type="checkbox"
-          id="is_available"
           disabled={isWorking}
           {...register("is_available")}
         />
       </FormRow>
 
+      <div>
+        <h3>Tamaños, precios y disponibilidad:</h3>
+        {sizes?.map((size) => {
+          const sizeDetail = sizesData.find((s) => s.size_id === size.id) || {};
+          return (
+            <div key={size.id}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={!!sizeDetail.price}
+                  onChange={(e) =>
+                    handleSizeChange(
+                      size.id,
+                      "price",
+                      e.target.checked ? sizeDetail.price || 0 : 0
+                    )
+                  }
+                />
+                {size.name}
+              </label>
+              {!!sizeDetail.price && (
+                <>
+                  Precio:{" "}
+                  <input
+                    type="number"
+                    value={sizeDetail.price}
+                    onChange={(e) =>
+                      handleSizeChange(
+                        size.id,
+                        "price",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                  />
+                  Disponible:{" "}
+                  <input
+                    type="checkbox"
+                    checked={sizeDetail.available}
+                    onChange={(e) =>
+                      handleSizeChange(size.id, "available", e.target.checked)
+                    }
+                  />
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
       <FormRow>
-        <Button
-          variation="danger"
-          type="reset"
-          onClick={() => onCloseModal?.()}
-        >
+        <Button variation="danger" type="reset" onClick={onCloseModal}>
           Cancel
         </Button>
-        <Button type="submit" disabled={isCreating}>
+        <Button disabled={isWorking}>
           {isEditSession ? "Edit Cocktail" : "Add Cocktail"}
         </Button>
       </FormRow>
     </Form>
   );
 }
-
-// Componentes auxiliares para Checkbox
 
 export default CreateCocktailForm;

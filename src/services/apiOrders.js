@@ -1,4 +1,4 @@
-import { PAGE_SIZE } from "../utils/constants";
+import { ORDER_PAGE_SIZE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
@@ -35,8 +35,8 @@ export async function getOrders({ filter, sortBy, page }) {
     });
 
   if (page) {
-    const from = (page - 1) * PAGE_SIZE;
-    const to = from + PAGE_SIZE - 1;
+    const from = (page - 1) * ORDER_PAGE_SIZE;
+    const to = from + ORDER_PAGE_SIZE - 1;
     query = query.range(from, to);
   }
 

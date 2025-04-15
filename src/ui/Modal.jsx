@@ -14,6 +14,13 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
+
+  max-height: 90vh;
+  overflow-y: auto;
+
+  body.dark-mode & {
+    background-color: var(--color-grey-100);
+  }
 `;
 
 const Overlay = styled.div`

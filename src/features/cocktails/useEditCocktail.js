@@ -3,21 +3,17 @@ import toast from "react-hot-toast";
 import { createEditCocktail } from "../../services/apiCocktails";
 
 export function useEditCocktail() {
-  const queryCLient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { mutate: editCocktail, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newCocktailData, id }) =>
-      createEditCocktail(newCocktailData, id),
+    mutationFn: (data) => createEditCocktail(data), // ✅ Esto soluciona el error
     onSuccess: () => {
       toast.success("Cocktail successfully edited");
-      queryCLient.invalidateQueries({
-        queryKey: ["cocktails"],
-        invalidateQueries: true,
-      });
+      queryClient.invalidateQueries(["cocktails"]);
     },
     onError: (error) => {
       console.error(error);
-      toast.error("Hubo un error al crear el cocktail");
+      toast.error("Hubo un error al editar el cocktail");
     },
   });
 

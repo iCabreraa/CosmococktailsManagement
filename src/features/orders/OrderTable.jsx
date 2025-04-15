@@ -6,6 +6,7 @@ import useOrders from "./useOrders";
 import Spinner from "../../ui/Spinner";
 import Empty from "../../ui/Empty";
 import Pagination from "../../ui/Pagination";
+import { ORDER_PAGE_SIZE } from "../../utils/constants";
 
 function OrderTable() {
   const { orders, isPending, count } = useOrders();
@@ -33,7 +34,7 @@ function OrderTable() {
 
       {/* Add pagination and other features */}
       <Table.Footer>
-        <Pagination count={count} />
+        <Pagination PAGE_SIZE={ORDER_PAGE_SIZE} count={count} />
       </Table.Footer>
     </Menus>
   );

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
 // import {formatCurrency} from "../../utils/helpers";
-import CreateCocktailForm from "./CreateCocktailForm";
-import { useDeleteCocktail } from "./useDeleteCocktail";
+import CreateCocktailForm from "../cocktails/CreateCocktailForm";
+import { useDeleteCocktail } from "../cocktails/useDeleteCocktail";
 
 import {
   HiCheckCircle,
@@ -11,7 +11,7 @@ import {
   HiTrash,
   HiXCircle,
 } from "react-icons/hi2";
-import { useCreateCocktail } from "./useCreateCocktail";
+import { useCreateCocktail } from "../cocktails/useCreateCocktail";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
@@ -70,7 +70,7 @@ const Status = styled.div`
   font-family: "Sono";
   font-weight: 500;
   color: ${(props) =>
-    props.available ? "var(--color-green-700)" : "var(--color-red-700)"};
+    props.$available ? "var(--color-green-700)" : "var(--color-red-700)"};
 `;
 
 function CocktailRow({ cocktail }) {
@@ -105,7 +105,7 @@ function CocktailRow({ cocktail }) {
       <Cocktail>{name}</Cocktail>
       <p>{description}</p>
       <Alcohol>{alcohol_percentage}% alcohol</Alcohol>
-      <Status available={has_non_alcoholic_version}>
+      <Status $available={has_non_alcoholic_version}>
         {has_non_alcoholic_version ? (
           <>
             <HiCheckCircle style={{ color: "var(--color-green-700)" }} />
@@ -119,7 +119,7 @@ function CocktailRow({ cocktail }) {
         )}
       </Status>
 
-      <Status available={is_available}>
+      <Status $available={is_available}>
         {is_available ? (
           <>
             <HiCheckCircle style={{ color: "var(--color-green-700)" }} />

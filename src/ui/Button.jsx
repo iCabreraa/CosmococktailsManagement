@@ -54,7 +54,7 @@ const StyledButton = styled.button`
   box-shadow: var(--shadow-sm);
 
   ${({ size }) => sizes[size]}
-  ${({ variation }) => variations[variation]}
+  ${({ $variation }) => variations[$variation]}
 `;
 
 // Envuelve StyledButton en un componente funcional que asigna props por defecto explícitamente
@@ -65,7 +65,7 @@ function Button({
   ...props
 }) {
   return (
-    <StyledButton size={size} variation={variation} {...props}>
+    <StyledButton size={size} $variation={variation} {...props}>
       {children}
     </StyledButton>
   );

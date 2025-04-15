@@ -18,6 +18,7 @@ import Order from "./pages/Order";
 import CheckPaid from "./pages/CheckPaid";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { DarkModeProvider } from "./context/DarkModeContext";
+import CocktailDetail from "./features/cocktails/CocktailDetail";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,10 @@ function App() {
                 <Route path="orders/:orderId" element={<Order />} />
                 <Route path="checkPaid/:orderId" element={<CheckPaid />} />
                 <Route path="cocktails" element={<Cocktails />} />
+                <Route
+                  path="/cocktails/:cocktailId"
+                  element={<CocktailDetail />}
+                />
                 <Route path="users" element={<Users />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="account" element={<Account />} />
