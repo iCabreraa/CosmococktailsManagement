@@ -1,34 +1,45 @@
-// import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getCurrentUser } from "../../services/apiAuth";
-// import supabase from "../../services/supabase";
+import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import supabase from "../../services/supabase";
 
 export function useUser() {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { isLoading, data: user } = useQuery({
-    queryKey: ["user"],
-    queryFn: getCurrentUser,
-  });
-  return { isLoading, user, isAuthenticated: user?.role === "authenticated" };
+  useEffect(() => {
+    // Obtener sesión inicial
+    const getInitialSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        queryClient.setQueryData(["user"], session.user);
+      } else {
+        queryClient.setQueryData(["user"], null);
+      }
+      setIsLoading(false);
+    };
 
-  // useEffect(() => {
-  //   const {
-  //     data: { subscription },
-  //   } = supabase.auth.onAuthStateChange((event, session) => {
-  //     if (session?.user) {
-  //       queryClient.setQueryData(["user"], session.user);
-  //     } else {
-  //       queryClient.setQueryData(["user"], null);
-  //     }
-  //   });
+    getInitialSession();
 
-  //   return () => subscription.unsubscribe();
-  // }, [queryClient]);
+    // Escuchar cambios de autenticación
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        queryClient.setQueryData(["user"], session.user);
+      } else {
+        queryClient.setQueryData(["user"], null);
+      }
+      setIsLoading(false);
+    });
 
-  // return {
-  //   isLoading,
-  //   user,
-  //   isAuthenticated: !!user,
-  // };
+    return () => subscription.unsubscribe();
+  }, [queryClient]);
+
+  const user = queryClient.getQueryData(["user"]);
+
+  return {
+    isLoading,
+    user,
+    isAuthenticated: !!user,
+  };
 }

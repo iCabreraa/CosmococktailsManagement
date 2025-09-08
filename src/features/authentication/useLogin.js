@@ -1,22 +1,22 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { login as loginApi } from "../../services/apiAuth";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import supabase from "../../services/supabase";
 
 export function useLogin() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const { mutate: login, isPending } = useMutation({
-    mutationFn: ({ email, password }) =>
-      loginApi({
+    mutationFn: async ({ email, password }) => {
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
-      }),
-    onSuccess: data => {
-      // 👇 Establece manualmente el usuario justo después del login exitoso
-      if (data.user) queryClient.setQueryData(["user"], data.user);
-
+      });
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("Sesión iniciada correctamente");
       navigate("/dashboard");
     },
     onError: error => {
