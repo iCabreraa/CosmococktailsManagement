@@ -14,7 +14,7 @@ export function useLogout() {
       queryClient.removeQueries();
       navigate("/login", { replace: true });
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message);
     },
   });

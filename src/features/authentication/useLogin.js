@@ -13,13 +13,13 @@ export function useLogin() {
         email,
         password,
       }),
-    onSuccess: (data) => {
+    onSuccess: data => {
       // 👇 Establece manualmente el usuario justo después del login exitoso
       if (data.user) queryClient.setQueryData(["user"], data.user);
 
       navigate("/dashboard");
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message);
       console.error(error);
     },

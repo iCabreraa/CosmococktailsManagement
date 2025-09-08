@@ -56,7 +56,7 @@ function UpcomingOrders() {
             as="h2"
             style={{
               color: upcomingOrders?.some(
-                (o) => getDateColor(o.delivery_date) === "red"
+                o => getDateColor(o.delivery_date) === "red"
               )
                 ? "var(--color-red-700)"
                 : undefined,
@@ -70,13 +70,13 @@ function UpcomingOrders() {
         ) : upcomingOrders?.length > 0 ? (
           <OrderList>
             {[...upcomingOrders]
-              .filter((order) => new Date(order.delivery_date) >= new Date())
+              .filter(order => new Date(order.delivery_date) >= new Date())
               .sort(
                 (a, b) =>
                   new Date(a.delivery_date).getTime() -
                   new Date(b.delivery_date).getTime()
               )
-              .map((order) => (
+              .map(order => (
                 <OrderItem order={order} key={order.id} />
               ))}
           </OrderList>

@@ -5,7 +5,6 @@ import Spinner from "../../ui/Spinner";
 import Stats from "./Stats";
 import SalesChart from "./SalesChart";
 import TopCocktailsChart from "./TopCocktailsChart";
-import TodayActivity from "../check-paid/UpcomingOrders";
 import UpcomingOrders from "../check-paid/UpcomingOrders";
 
 const StyledDashboardLayout = styled.div`
@@ -20,9 +19,6 @@ function DashboardLayout() {
   const { paidOrders, isLoading: isLoadingPaid } = useRecentPaid();
 
   if (isLoadingOrders || isLoadingPaid) return <Spinner />;
-
-  console.log("All orders:", orders);
-  console.log("Paid orders:", paidOrders);
 
   return (
     <StyledDashboardLayout>

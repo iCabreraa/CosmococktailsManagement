@@ -14,7 +14,7 @@ export function useUpdateUser() {
       //   queryKey: ["user"],
       // });
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(error.message);
     },
   });

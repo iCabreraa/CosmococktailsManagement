@@ -13,7 +13,7 @@ function OrderItemsTable({ items }) {
 
       <Table.Body
         data={items}
-        render={(item) => (
+        render={item => (
           <Table.Row key={item.id}>
             <div>{item.cocktails.name}</div>
             <div>

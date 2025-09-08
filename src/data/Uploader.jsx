@@ -43,11 +43,9 @@ async function uploadAll() {
   if (sizeError) console.error("Sizes:", sizeError);
 
   const finalCocktailSizes = cocktail_sizes
-    .map((cs) => {
-      const cocktail = insertedCocktails.find(
-        (c) => c.name === cs.cocktail_name
-      );
-      const size = insertedSizes.find((s) => s.name === cs.size_name);
+    .map(cs => {
+      const cocktail = insertedCocktails.find(c => c.name === cs.cocktail_name);
+      const size = insertedSizes.find(s => s.name === cs.size_name);
       if (!cocktail || !size) return null;
       return {
         cocktail_id: cocktail.id,
@@ -63,12 +61,12 @@ async function uploadAll() {
   if (cocktailSizesError) console.error("Cocktail_sizes:", cocktailSizesError);
 
   const finalOrders = orders
-    .map((order) => {
-      const user = insertedUsers.find((u) => u.email === order.user_email);
+    .map(order => {
+      const user = insertedUsers.find(u => u.email === order.user_email);
       if (!user) return null;
 
       const total_amount = order_items
-        .filter((item) => item.order_ref === order.order_ref)
+        .filter(item => item.order_ref === order.order_ref)
         .reduce((sum, item) => sum + item.quantity * item.unit_price, 0);
 
       return {
@@ -94,12 +92,10 @@ async function uploadAll() {
   if (ordersError) console.error("Orders:", ordersError);
 
   const finalOrderItems = order_items
-    .map((oi) => {
-      const order = insertedOrders.find((o) => o.order_ref === oi.order_ref);
-      const cocktail = insertedCocktails.find(
-        (c) => c.name === oi.cocktail_name
-      );
-      const size = insertedSizes.find((s) => s.name === oi.size_name);
+    .map(oi => {
+      const order = insertedOrders.find(o => o.order_ref === oi.order_ref);
+      const cocktail = insertedCocktails.find(c => c.name === oi.cocktail_name);
+      const size = insertedSizes.find(s => s.name === oi.size_name);
       if (!order || !cocktail || !size) return null;
 
       return {

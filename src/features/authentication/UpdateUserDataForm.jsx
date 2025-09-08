@@ -51,7 +51,7 @@ function UpdateUserDataForm() {
         <Input
           type="text"
           value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          onChange={e => setFullName(e.target.value)}
           id="fullName"
           disabled={isUpdating}
         />
@@ -61,7 +61,7 @@ function UpdateUserDataForm() {
           id="avatar"
           disabled={isUpdating}
           accept="image/*"
-          onChange={(e) => setAvatar(e.target.files[0])}
+          onChange={e => setAvatar(e.target.files[0])}
         />
       </FormRow>
       <FormRow>

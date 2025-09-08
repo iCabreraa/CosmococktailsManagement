@@ -13,7 +13,7 @@ export async function getCocktailSalesData(cocktailId, days) {
 
   if (ordersError) throw new Error("Could not load orders");
 
-  const validOrderIds = orders.map((o) => o.id);
+  const validOrderIds = orders.map(o => o.id);
 
   if (validOrderIds.length === 0) {
     return { sizeCounts: {}, dailySales: {} };
@@ -31,7 +31,7 @@ export async function getCocktailSalesData(cocktailId, days) {
   const sizeCounts = {};
   const dailySales = {};
 
-  data.forEach((item) => {
+  data.forEach(item => {
     const size = item.sizes?.name ?? "Unknown";
     sizeCounts[size] = (sizeCounts[size] || 0) + item.quantity;
 

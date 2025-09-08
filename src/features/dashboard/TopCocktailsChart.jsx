@@ -53,8 +53,8 @@ const colorsDark = [
 function prepareCocktailData(orders, isDarkMode) {
   const cocktailMap = {};
 
-  orders?.forEach((order) => {
-    order.order_items?.forEach((item) => {
+  orders?.forEach(order => {
+    order.order_items?.forEach(item => {
       const cocktailName = item.cocktails?.name;
       const size = item.sizes?.volume_ml || 0;
       const key = `${cocktailName} - ${size}ml`;
@@ -102,7 +102,7 @@ function TopCocktailsChart({ orders }) {
             cy="50%"
             paddingAngle={3}
           >
-            {data.map((entry) => (
+            {data.map(entry => (
               <Cell key={entry.label} fill={entry.color} stroke={entry.color} />
             ))}
           </Pie>

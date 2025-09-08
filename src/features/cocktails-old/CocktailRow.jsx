@@ -69,7 +69,7 @@ const Status = styled.div`
   gap: 0.4rem;
   font-family: "Sono";
   font-weight: 500;
-  color: ${(props) =>
+  color: ${props =>
     props.$available ? "var(--color-green-700)" : "var(--color-red-700)"};
 `;
 

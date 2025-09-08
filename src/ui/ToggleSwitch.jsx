@@ -5,7 +5,7 @@ const Switch = styled.button`
   height: 24px;
   border-radius: 12px;
   border: none;
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.$active ? "var(--color-green-200)" : "var(--color-red-200)"};
   position: relative;
   cursor: pointer;
@@ -15,7 +15,7 @@ const Switch = styled.button`
     content: "";
     position: absolute;
     top: 3px;
-    left: ${(props) => (props.$active ? "22px" : "3px")};
+    left: ${props => (props.$active ? "22px" : "3px")};
     width: 18px;
     height: 18px;
     border-radius: 50%;

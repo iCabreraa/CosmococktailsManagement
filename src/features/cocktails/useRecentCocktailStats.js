@@ -14,8 +14,8 @@ export async function getRecentCocktailStats(cocktailId, days) {
 
   if (ordersError) throw new Error("Could not fetch recent orders");
 
-  const recentOrderIds = recentOrders.map((o) => o.id);
-  const uniqueUserIds = new Set(recentOrders.map((o) => o.user_id));
+  const recentOrderIds = recentOrders.map(o => o.id);
+  const uniqueUserIds = new Set(recentOrders.map(o => o.user_id));
 
   if (recentOrderIds.length === 0) {
     return {

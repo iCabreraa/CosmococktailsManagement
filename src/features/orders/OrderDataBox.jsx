@@ -74,9 +74,9 @@ const Price = styled.div`
   border-radius: var(--border-radius-sm);
   margin-top: 2.4rem;
 
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.is_paid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
-  color: ${(props) =>
+  color: ${props =>
     props.is_paid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
 
   & p:last-child {

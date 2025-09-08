@@ -12,7 +12,7 @@ export function useDeleteCocktail() {
       toast.success("Cocktail eliminado correctamente");
       queryClient.invalidateQueries("cocktails");
     },
-    onError: (error) => {
+    onError: error => {
       console.error(error);
       toast.error("Hubo un error al eliminar el cocktail");
     },

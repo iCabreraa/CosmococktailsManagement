@@ -25,7 +25,7 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
   useEffect(() => {
     if (isEditSession && cocktail_sizes) {
       setSizesData(
-        cocktail_sizes.map((cs) => ({
+        cocktail_sizes.map(cs => ({
           size_id: cs.sizes.id,
           price: cs.price,
           available: cs.available,
@@ -35,9 +35,9 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
   }, [isEditSession, cocktail_sizes]);
 
   function handleSizeChange(size_id, field, value) {
-    setSizesData((prev) => {
-      const updated = prev.filter((s) => s.size_id !== size_id);
-      const currentSize = prev.find((s) => s.size_id === size_id) || {
+    setSizesData(prev => {
+      const updated = prev.filter(s => s.size_id !== size_id);
+      const currentSize = prev.find(s => s.size_id === size_id) || {
         size_id,
         price: 0,
         available: true,
@@ -119,15 +119,15 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
 
       <div>
         <h3>Tamaños, precios y disponibilidad:</h3>
-        {sizes?.map((size) => {
-          const sizeDetail = sizesData.find((s) => s.size_id === size.id) || {};
+        {sizes?.map(size => {
+          const sizeDetail = sizesData.find(s => s.size_id === size.id) || {};
           return (
             <div key={size.id}>
               <label>
                 <input
                   type="checkbox"
                   checked={!!sizeDetail.price}
-                  onChange={(e) =>
+                  onChange={e =>
                     handleSizeChange(
                       size.id,
                       "price",
@@ -143,7 +143,7 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
                   <input
                     type="number"
                     value={sizeDetail.price}
-                    onChange={(e) =>
+                    onChange={e =>
                       handleSizeChange(
                         size.id,
                         "price",
@@ -155,7 +155,7 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
                   <input
                     type="checkbox"
                     checked={sizeDetail.available}
-                    onChange={(e) =>
+                    onChange={e =>
                       handleSizeChange(size.id, "available", e.target.checked)
                     }
                   />

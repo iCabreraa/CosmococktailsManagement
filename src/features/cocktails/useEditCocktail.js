@@ -6,12 +6,12 @@ export function useEditCocktail() {
   const queryClient = useQueryClient();
 
   const { mutate: editCocktail, isLoading: isEditing } = useMutation({
-    mutationFn: (data) => createEditCocktail(data), // ✅ Esto soluciona el error
+    mutationFn: data => createEditCocktail(data), // ✅ Esto soluciona el error
     onSuccess: () => {
       toast.success("Cocktail successfully edited");
       queryClient.invalidateQueries(["cocktails"]);
     },
-    onError: (error) => {
+    onError: error => {
       console.error(error);
       toast.error("Hubo un error al editar el cocktail");
     },

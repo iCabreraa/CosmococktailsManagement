@@ -24,20 +24,20 @@ function CocktailTable() {
 
   if (availabilityFilter === "available")
     filteredCocktails = filteredCocktails.filter(
-      (cocktail) => cocktail.is_available
+      cocktail => cocktail.is_available
     );
   else if (availabilityFilter === "non-available")
     filteredCocktails = filteredCocktails.filter(
-      (cocktail) => !cocktail.is_available
+      cocktail => !cocktail.is_available
     );
 
   if (alcoholFilter === "with-alcohol")
     filteredCocktails = filteredCocktails.filter(
-      (cocktail) => !cocktail.has_non_alcoholic_version
+      cocktail => !cocktail.has_non_alcoholic_version
     );
   else if (alcoholFilter === "non-alcohol")
     filteredCocktails = filteredCocktails.filter(
-      (cocktail) => cocktail.has_non_alcoholic_version
+      cocktail => cocktail.has_non_alcoholic_version
     );
 
   // if (priceFilter !== "all") {
@@ -94,7 +94,7 @@ function CocktailTable() {
 
         <Table.Body
           data={paginatedCocktails}
-          render={(cocktail) => (
+          render={cocktail => (
             <CocktailRow key={cocktail.id} cocktail={cocktail} />
           )}
         />
@@ -103,7 +103,7 @@ function CocktailTable() {
       <Pagination
         count={sortedCocktails.length}
         currentPage={currentPage}
-        onPageChange={(page) => {
+        onPageChange={page => {
           searchParams.set("page", page);
           setSearchParams(searchParams);
         }}

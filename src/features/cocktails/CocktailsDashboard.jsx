@@ -37,10 +37,10 @@ function CocktailsDashboard() {
 
   const totalCocktails = cocktails.length;
   const availableCocktails = cocktails.filter(
-    (cocktail) => cocktail.is_available
+    cocktail => cocktail.is_available
   ).length;
   const nonAlcoholicVersions = cocktails.filter(
-    (cocktail) => cocktail.has_non_alcoholic_version
+    cocktail => cocktail.has_non_alcoholic_version
   ).length;
 
   return (

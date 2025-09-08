@@ -15,7 +15,7 @@ export function useRecentPaid() {
     queryKey: ["paid-orders", `last-${numDays}`],
   });
 
-  const paidOrders = orders?.filter((order) => order.is_paid);
+  const paidOrders = orders?.filter(order => order.is_paid);
 
   return { isLoading, paidOrders };
 }

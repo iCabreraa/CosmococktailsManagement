@@ -73,7 +73,7 @@ function SignupForm() {
           disabled={isPending}
           {...register("passwordConfirm", {
             required: "This field is required",
-            validate: (value) =>
+            validate: value =>
               value === getValues().password || "Passwords do not match",
           })}
         />

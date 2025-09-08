@@ -34,12 +34,10 @@ function App() {
           <GlobalStyles />
           <BrowserRouter>
             <Routes>
-              {/* TODO: Realizar rutas correctas para cosmococktails */}
               <Route
                 element={
                   <ProtectedRoute>
-                    {" "}
-                    <AppLayout />{" "}
+                    <AppLayout />
                   </ProtectedRoute>
                 }
               >

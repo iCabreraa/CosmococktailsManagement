@@ -48,7 +48,7 @@ function UpdatePasswordForm() {
           disabled={isUpdating}
           {...register("passwordConfirm", {
             required: "This field is required",
-            validate: (value) =>
+            validate: value =>
               getValues().password === value || "Passwords need to match",
           })}
         />

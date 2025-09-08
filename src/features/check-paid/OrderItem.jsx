@@ -18,7 +18,9 @@ const StyledItem = styled.li`
   border-radius: var(--border-radius-sm);
   background-color: var(--color-grey-0);
   box-shadow: var(--shadow-sm);
-  transition: background-color 0.2s, transform 0.2s;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
 
   &:hover {
     background-color: var(--color-grey-100);

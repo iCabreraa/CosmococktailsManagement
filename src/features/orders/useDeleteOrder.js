@@ -15,7 +15,7 @@ export function useDeleteOrder() {
         invalidate: true,
       });
     },
-    onError: (error) => {
+    onError: error => {
       toast.error("Failed to delete the order: " + error.message);
     },
   });

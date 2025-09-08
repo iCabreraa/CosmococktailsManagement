@@ -8,18 +8,18 @@ export function useCheckin() {
   const navigate = useNavigate();
 
   const { mutate: checkin, isLoading: isCheckingIn } = useMutation({
-    mutationFn: (orderId) =>
+    mutationFn: orderId =>
       updateOrder(orderId, {
         status: "completed",
         is_paid: true,
       }),
-    onSuccess: (data) => {
+    onSuccess: data => {
       console.log("Update Order ", data);
       toast.success(`Order ${data.id} successfully marked as paid`);
       queryClient.invalidateQueries({ active: true });
       navigate(`/orders/${data.id}`);
     },
-    onError: (error) => {
+    onError: error => {
       toast.error(`Failed to confirm payment: ${error.message}`);
     },
   });

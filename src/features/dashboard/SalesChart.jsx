@@ -30,8 +30,8 @@ function SalesChart({ orders, numDays }) {
     end: new Date(),
   });
 
-  const data = allDates.map((date) => {
-    const dailyOrders = orders.filter((order) =>
+  const data = allDates.map(date => {
+    const dailyOrders = orders.filter(order =>
       isSameDay(new Date(order.order_date), date)
     );
 
@@ -39,7 +39,7 @@ function SalesChart({ orders, numDays }) {
       label: format(date, "MMM dd"),
       totalSales: dailyOrders.reduce((acc, cur) => acc + cur.total_amount, 0),
       paidSales: dailyOrders
-        .filter((order) => order.is_paid)
+        .filter(order => order.is_paid)
         .reduce((acc, cur) => acc + cur.total_amount, 0),
     };
   });

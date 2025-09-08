@@ -20,7 +20,7 @@ function DarkModeProvider({ children }) {
   );
 
   function toggleDarkMode() {
-    setIsDarkMode((isDark) => !isDark);
+    setIsDarkMode(isDark => !isDark);
     localStorage.setItem("isDarkMode", isDarkMode);
   }
 

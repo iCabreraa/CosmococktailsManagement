@@ -28,7 +28,7 @@ function OrderTable() {
 
         <Table.Body
           data={orders}
-          render={(order) => <OrderRow key={order.id} order={order} />}
+          render={order => <OrderRow key={order.id} order={order} />}
         />
       </Table>
 

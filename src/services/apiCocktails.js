@@ -130,8 +130,8 @@ export async function createEditCocktail({
   // ✅ Insertar nuevos tamaños
   if (Array.isArray(sizesData) && sizesData.length > 0) {
     const formatted = sizesData
-      .filter((s) => s.size_id && typeof s.price === "number")
-      .map((s) => ({
+      .filter(s => s.size_id && typeof s.price === "number")
+      .map(s => ({
         cocktail_id: cocktail.id,
         size_id: s.size_id,
         price: s.price,

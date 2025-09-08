@@ -59,7 +59,7 @@ function CheckinPayment() {
         {order.is_paid === false && (
           <CheckBox
             checked={confirmPaid}
-            onChange={() => setConfirmPaid((confirm) => !confirm)}
+            onChange={() => setConfirmPaid(confirm => !confirm)}
             disabled={confirmPaid || isCheckingIn}
             id="confirm"
           >

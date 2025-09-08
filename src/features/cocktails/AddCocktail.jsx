@@ -41,7 +41,7 @@ const ToggleSwitch = styled.button`
   height: 24px;
   border-radius: 12px;
   border: none;
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.$active ? "var(--color-green-300)" : "var(--color-red-300)"};
   position: relative;
   cursor: pointer;
@@ -51,7 +51,7 @@ const ToggleSwitch = styled.button`
     content: "";
     position: absolute;
     top: 3px;
-    left: ${(props) => (props.$active ? "22px" : "3px")};
+    left: ${props => (props.$active ? "22px" : "3px")};
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -105,7 +105,7 @@ function AddCocktail() {
   useEffect(() => {
     if (sizes) {
       setSizesState(
-        sizes.map((s) => ({
+        sizes.map(s => ({
           size_id: s.id,
           name: s.name,
           volume_ml: s.volume_ml,
@@ -117,8 +117,8 @@ function AddCocktail() {
   }, [sizes]);
 
   function handleSizeChange(size_id, field, value) {
-    setSizesState((prev) =>
-      prev.map((s) => (s.size_id === size_id ? { ...s, [field]: value } : s))
+    setSizesState(prev =>
+      prev.map(s => (s.size_id === size_id ? { ...s, [field]: value } : s))
     );
   }
 
@@ -177,7 +177,7 @@ function AddCocktail() {
           <ToggleSwitch
             type="button"
             $active={virgin}
-            onClick={() => setVirgin((v) => !v)}
+            onClick={() => setVirgin(v => !v)}
           />
         </div>
 
@@ -186,7 +186,7 @@ function AddCocktail() {
           <ToggleSwitch
             type="button"
             $active={available}
-            onClick={() => setAvailable((a) => !a)}
+            onClick={() => setAvailable(a => !a)}
           />
         </div>
       </FieldGroup>
@@ -195,7 +195,7 @@ function AddCocktail() {
         <Label>Image</Label>
         <FileInput
           accept="image/*"
-          onChange={(e) => setSelectedImage(e.target.files[0])}
+          onChange={e => setSelectedImage(e.target.files[0])}
         />
       </div>
 
@@ -212,7 +212,7 @@ function AddCocktail() {
               </tr>
             </thead>
             <tbody>
-              {sizesState.map((size) => (
+              {sizesState.map(size => (
                 <tr key={size.size_id}>
                   <td>{size.name}</td>
                   <td>{size.volume_ml} ml</td>
@@ -221,7 +221,7 @@ function AddCocktail() {
                       type="number"
                       step="0.01"
                       value={size.price}
-                      onChange={(e) =>
+                      onChange={e =>
                         handleSizeChange(
                           size.size_id,
                           "price",

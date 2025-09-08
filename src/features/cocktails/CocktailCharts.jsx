@@ -62,7 +62,7 @@ const Title = styled.h4`
   font-weight: 600;
 `;
 
-const tooltipStyle = (mode) => ({
+const tooltipStyle = mode => ({
   backgroundColor:
     mode === "dark" ? "var(--color-grey-800)" : "var(--color-grey-100)",
   border: `1px solid var(--color-grey-300)`,
