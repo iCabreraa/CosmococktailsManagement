@@ -9,7 +9,9 @@ export function useUser() {
   useEffect(() => {
     // Obtener sesión inicial
     const getInitialSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       if (session?.user) {
         queryClient.setQueryData(["user"], session.user);
       } else {
