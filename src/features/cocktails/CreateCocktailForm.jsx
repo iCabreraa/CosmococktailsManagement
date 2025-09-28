@@ -26,7 +26,7 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
     if (isEditSession && cocktail_sizes) {
       setSizesData(
         cocktail_sizes.map(cs => ({
-          size_id: cs.sizes.id,
+          sizes_id: cs.sizes.id,
           price: cs.price,
           available: cs.available,
         }))
@@ -34,11 +34,11 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
     }
   }, [isEditSession, cocktail_sizes]);
 
-  function handleSizeChange(size_id, field, value) {
+  function handleSizeChange(sizes_id, field, value) {
     setSizesData(prev => {
-      const updated = prev.filter(s => s.size_id !== size_id);
-      const currentSize = prev.find(s => s.size_id === size_id) || {
-        size_id,
+      const updated = prev.filter(s => s.sizes_id !== sizes_id);
+      const currentSize = prev.find(s => s.sizes_id === sizes_id) || {
+        sizes_id,
         price: 0,
         available: true,
       };
@@ -120,7 +120,7 @@ function CreateCocktailForm({ cocktailToEdit = {}, onCloseModal }) {
       <div>
         <h3>Tamaños, precios y disponibilidad:</h3>
         {sizes?.map(size => {
-          const sizeDetail = sizesData.find(s => s.size_id === size.id) || {};
+          const sizeDetail = sizesData.find(s => s.sizes_id === size.id) || {};
           return (
             <div key={size.id}>
               <label>

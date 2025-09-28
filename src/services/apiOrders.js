@@ -17,7 +17,7 @@ export async function getOrders({ filter, sortBy, page }) {
     payment_method,
     is_paid,
     notes,
-    users (id, full_name, email, phone, avatar_url),
+    users_new (id, full_name, email, phone, avatar_url),
     order_items (
       id, quantity, unit_price, item_total,
       cocktails (name),
@@ -59,7 +59,7 @@ export async function getOrder(id) {
     .select(
       `
       *,
-      users(*),
+      users_new(id, full_name, email, phone, avatar_url),
       order_items (
         *, cocktails(*), sizes(*)
       )
@@ -71,6 +71,11 @@ export async function getOrder(id) {
   if (error) {
     console.error(error);
     throw new Error("Order not found");
+  }
+
+  // Asegurar que users_new sea null si user_id es null
+  if (data && !data.user_id) {
+    data.users_new = null;
   }
 
   return data;

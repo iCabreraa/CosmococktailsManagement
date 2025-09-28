@@ -52,7 +52,7 @@ function OrderRow({ order }) {
     cancelled: "red",
   };
 
-  const user = order.users;
+  const user = order.users_new;
 
   return (
     <Table.Row>
@@ -82,7 +82,7 @@ function OrderRow({ order }) {
             </Modal.Window>
           </Modal>
         ) : (
-          <span style={{ color: "var(--color-red-700)" }}>User not found</span>
+          <span style={{ color: "var(--color-blue-700)" }}>Guest</span>
         )}
       </UserDetails>
 

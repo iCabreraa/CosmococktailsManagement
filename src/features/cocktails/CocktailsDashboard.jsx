@@ -31,9 +31,19 @@ const CardData = styled.p`
 `;
 
 function CocktailsDashboard() {
-  const { cocktails, isPending } = useCocktails();
+  const { cocktails, isPending, error } = useCocktails();
 
   if (isPending) return <Spinner />;
+
+  // Manejar caso cuando cocktails es undefined o hay error
+  if (error || !cocktails) {
+    return (
+      <div>
+        <Heading as="h1">Cocktails Dashboard</Heading>
+        <p>Error loading cocktails: {error?.message || "Unknown error"}</p>
+      </div>
+    );
+  }
 
   const totalCocktails = cocktails.length;
   const availableCocktails = cocktails.filter(

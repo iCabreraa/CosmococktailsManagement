@@ -14,9 +14,9 @@ export function useRole() {
   const isStaff = useMemo(() => role === "staff", [role]);
 
   const hasPermission = useMemo(() => {
-    return (requiredRole) => {
+    return requiredRole => {
       if (isLoading) return false;
-      
+
       const roles = Array.isArray(requiredRole) ? requiredRole : [requiredRole];
       return roles.includes(role);
     };
@@ -31,3 +31,4 @@ export function useRole() {
     isLoading,
   };
 }
+

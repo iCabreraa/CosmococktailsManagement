@@ -16,6 +16,8 @@ import { Toaster } from "react-hot-toast";
 import Orders from "./pages/Orders";
 import Order from "./pages/Order";
 import CheckPaid from "./pages/CheckPaid";
+import Inventory from "./pages/Inventory";
+import Clients from "./pages/Clients";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import CocktailDetail from "./features/cocktails/CocktailDetail";
@@ -43,45 +45,45 @@ function App() {
                 }
               >
                 <Route index element={<Navigate replace to="dashboard" />} />
-                <Route 
-                  path="dashboard" 
+                <Route
+                  path="dashboard"
                   element={
                     <RoleGuard allowedRoles={["admin", "staff"]}>
                       <Dashboard />
                     </RoleGuard>
-                  } 
+                  }
                 />
-                <Route 
-                  path="orders" 
+                <Route
+                  path="orders"
                   element={
                     <RoleGuard allowedRoles={["admin", "staff"]}>
                       <Orders />
                     </RoleGuard>
-                  } 
+                  }
                 />
-                <Route 
-                  path="orders/:orderId" 
+                <Route
+                  path="orders/:orderId"
                   element={
                     <RoleGuard allowedRoles={["admin", "staff"]}>
                       <Order />
                     </RoleGuard>
-                  } 
+                  }
                 />
-                <Route 
-                  path="checkPaid/:orderId" 
+                <Route
+                  path="checkPaid/:orderId"
                   element={
                     <RoleGuard allowedRoles={["admin", "staff"]}>
                       <CheckPaid />
                     </RoleGuard>
-                  } 
+                  }
                 />
-                <Route 
-                  path="cocktails" 
+                <Route
+                  path="cocktails"
                   element={
                     <RoleGuard allowedRoles={["admin", "staff"]}>
                       <Cocktails />
                     </RoleGuard>
-                  } 
+                  }
                 />
                 <Route
                   path="/cocktails/:cocktailId"
@@ -91,21 +93,37 @@ function App() {
                     </RoleGuard>
                   }
                 />
-                <Route 
-                  path="users" 
+                <Route
+                  path="inventory"
+                  element={
+                    <RoleGuard allowedRoles={["admin", "staff"]}>
+                      <Inventory />
+                    </RoleGuard>
+                  }
+                />
+                <Route
+                  path="clients"
+                  element={
+                    <RoleGuard allowedRoles={["admin", "staff"]}>
+                      <Clients />
+                    </RoleGuard>
+                  }
+                />
+                <Route
+                  path="users"
                   element={
                     <RoleGuard allowedRoles={["admin"]}>
                       <Users />
                     </RoleGuard>
-                  } 
+                  }
                 />
-                <Route 
-                  path="settings" 
+                <Route
+                  path="settings"
                   element={
                     <RoleGuard allowedRoles={["admin"]}>
                       <Settings />
                     </RoleGuard>
-                  } 
+                  }
                 />
                 <Route path="account" element={<Account />} />
               </Route>

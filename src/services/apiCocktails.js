@@ -36,7 +36,7 @@ export async function getCocktails() {
         id,
         price,
         available,
-        size_id,
+        sizes_id,
         sizes (
           id,
           name,
@@ -60,7 +60,7 @@ export async function getCocktailById(id) {
         id,
         price,
         available,
-        size_id,
+        sizes_id,
         sizes (
           id,
           name,
@@ -130,10 +130,10 @@ export async function createEditCocktail({
   // ✅ Insertar nuevos tamaños
   if (Array.isArray(sizesData) && sizesData.length > 0) {
     const formatted = sizesData
-      .filter(s => s.size_id && typeof s.price === "number")
+      .filter(s => s.sizes_id && typeof s.price === "number")
       .map(s => ({
         cocktail_id: cocktail.id,
-        size_id: s.size_id,
+        sizes_id: s.sizes_id,
         price: s.price,
         available: s.available ?? true,
       }));

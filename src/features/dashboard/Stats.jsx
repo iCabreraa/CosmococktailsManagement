@@ -1,5 +1,9 @@
-import { HiOutlineBriefcase, HiOutlineChartPie } from "react-icons/hi";
-import { HiOutlineBanknotes, HiOutlineCreditCard } from "react-icons/hi2";
+import {
+  HiOutlineBriefcase,
+  HiOutlineChartPie,
+  HiOutlineBanknotes,
+  HiOutlineCreditCard,
+} from "react-icons/hi2";
 import Stat from "./Stat";
 import { formatCurrency } from "../../utils/helpers";
 

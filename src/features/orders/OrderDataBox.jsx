@@ -111,8 +111,11 @@ function OrderDataBox({ order }) {
     is_paid,
     delivery_address,
     notes,
-    users: { full_name, email, phone },
+    users_new,
   } = order;
+
+  // Manejar caso cuando users_new es null
+  const { full_name, email, phone } = users_new || {};
 
   const orderDate = order_date ? new Date(order_date) : null;
   const deliveryDate = delivery_date ? new Date(delivery_date) : null;
@@ -146,11 +149,11 @@ function OrderDataBox({ order }) {
       <Section>
         <User>
           <HiOutlineUser />
-          <p>{full_name}</p>
+          <p>{full_name || "Guest"}</p>
           <span>&bull;</span>
-          <p>{email}</p>
+          <p>{email || "N/A"}</p>
           <span>&bull;</span>
-          <p>{phone}</p>
+          <p>{phone || "N/A"}</p>
         </User>
 
         <DataItem icon={<HiOutlineCheckCircle />} label="Status">
