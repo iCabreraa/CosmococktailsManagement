@@ -6,8 +6,18 @@ export function useRole() {
 
   const role = useMemo(() => {
     if (!user) return "client";
-    return user.user_metadata?.role || "client";
-  }, [user]);
+    const userRole = user.user_metadata?.role || "client";
+    
+    // Debug logging
+    console.log("useRole Debug:", {
+      user: user ? { id: user.id, email: user.email } : null,
+      user_metadata: user?.user_metadata,
+      role: userRole,
+      isLoading
+    });
+    
+    return userRole;
+  }, [user, isLoading]);
 
   const isAdmin = useMemo(() => role === "admin", [role]);
   const isClient = useMemo(() => role === "client", [role]);

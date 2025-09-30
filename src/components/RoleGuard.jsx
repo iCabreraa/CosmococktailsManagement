@@ -12,8 +12,17 @@ export default function RoleGuard({
   const { role, isLoading, hasPermission } = useRole();
   const navigate = useNavigate();
 
+  // Debug logging
+  console.log("RoleGuard Debug:", {
+    role,
+    isLoading,
+    allowedRoles,
+    hasPermission: hasPermission(allowedRoles),
+  });
+
   useEffect(() => {
     if (!isLoading && !hasPermission(allowedRoles)) {
+      console.log("RoleGuard: Redirecting to login - insufficient permissions");
       navigate(redirectTo);
     }
   }, [isLoading, hasPermission, allowedRoles, redirectTo, navigate]);
