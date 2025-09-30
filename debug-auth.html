@@ -1,72 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Debug Authentication</title>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Debug Authentication</h1>
     <div id="output"></div>
-    
+
     <script>
-        // Configuración de Supabase
-        const supabaseUrl = 'https://qpztyzhosqbmzptazlnx.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwenR5emhvc3FibXpwdGF6bG54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MzcwMzIsImV4cCI6MjA1NDQxMzAzMn0.QHoczPirwGF3tORYqytBEXYBdj7AKRGJM8aBT1Pu-d8';
-        
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        
-        async function debugAuth() {
-            const output = document.getElementById('output');
-            
-            try {
-                // 1. Verificar sesión actual
-                const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-                output.innerHTML += `<h2>1. Sesión actual:</h2>`;
-                output.innerHTML += `<pre>${JSON.stringify(sessionData, null, 2)}</pre>`;
-                if (sessionError) {
-                    output.innerHTML += `<p style="color: red;">Error: ${sessionError.message}</p>`;
-                }
-                
-                // 2. Intentar login
-                output.innerHTML += `<h2>2. Intentando login...</h2>`;
-                const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({
-                    email: 'alexaliaman9@gmail.com',
-                    password: 'admin123456' // Cambia por la contraseña correcta
-                });
-                
-                output.innerHTML += `<pre>${JSON.stringify(loginData, null, 2)}</pre>`;
-                if (loginError) {
-                    output.innerHTML += `<p style="color: red;">Error de login: ${loginError.message}</p>`;
-                } else {
-                    output.innerHTML += `<p style="color: green;">Login exitoso!</p>`;
-                    
-                    // 3. Verificar user_metadata
-                    if (loginData.user) {
-                        output.innerHTML += `<h2>3. User metadata:</h2>`;
-                        output.innerHTML += `<pre>${JSON.stringify(loginData.user.user_metadata, null, 2)}</pre>`;
-                        
-                        // 4. Verificar rol
-                        const role = loginData.user.user_metadata?.role;
-                        output.innerHTML += `<h2>4. Rol del usuario:</h2>`;
-                        output.innerHTML += `<p>Rol: ${role || 'No definido'}</p>`;
-                        
-                        if (role === 'admin') {
-                            output.innerHTML += `<p style="color: green;">✅ Usuario es admin</p>`;
-                        } else {
-                            output.innerHTML += `<p style="color: red;">❌ Usuario NO es admin</p>`;
-                        }
-                    }
-                }
-                
-            } catch (error) {
-                output.innerHTML += `<p style="color: red;">Error general: ${error.message}</p>`;
+      // Configuración de Supabase
+      const supabaseUrl = "https://qpztyzhosqbmzptazlnx.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFwenR5emhvc3FibXpwdGF6bG54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg4MzcwMzIsImV4cCI6MjA1NDQxMzAzMn0.QHoczPirwGF3tORYqytBEXYBdj7AKRGJM8aBT1Pu-d8";
+
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+      async function debugAuth() {
+        const output = document.getElementById("output");
+
+        try {
+          // 1. Verificar sesión actual
+          const { data: sessionData, error: sessionError } =
+            await supabase.auth.getSession();
+          output.innerHTML += `<h2>1. Sesión actual:</h2>`;
+          output.innerHTML += `<pre>${JSON.stringify(sessionData, null, 2)}</pre>`;
+          if (sessionError) {
+            output.innerHTML += `<p style="color: red;">Error: ${sessionError.message}</p>`;
+          }
+
+           // 2. Intentar login con usuario de prueba
+           output.innerHTML += `<h2>2. Intentando login con usuario de prueba...</h2>`;
+           const { data: loginData, error: loginError } =
+             await supabase.auth.signInWithPassword({
+               email: "test-admin@cosmococktails.com",
+               password: "admin123456",
+             });
+
+          output.innerHTML += `<pre>${JSON.stringify(loginData, null, 2)}</pre>`;
+          if (loginError) {
+            output.innerHTML += `<p style="color: red;">Error de login: ${loginError.message}</p>`;
+          } else {
+            output.innerHTML += `<p style="color: green;">Login exitoso!</p>`;
+
+            // 3. Verificar user_metadata
+            if (loginData.user) {
+              output.innerHTML += `<h2>3. User metadata:</h2>`;
+              output.innerHTML += `<pre>${JSON.stringify(loginData.user.user_metadata, null, 2)}</pre>`;
+
+              // 4. Verificar rol
+              const role = loginData.user.user_metadata?.role;
+              output.innerHTML += `<h2>4. Rol del usuario:</h2>`;
+              output.innerHTML += `<p>Rol: ${role || "No definido"}</p>`;
+
+              if (role === "admin") {
+                output.innerHTML += `<p style="color: green;">✅ Usuario es admin</p>`;
+              } else {
+                output.innerHTML += `<p style="color: red;">❌ Usuario NO es admin</p>`;
+              }
             }
+          }
+        } catch (error) {
+          output.innerHTML += `<p style="color: red;">Error general: ${error.message}</p>`;
         }
-        
-        // Ejecutar debug al cargar la página
-        debugAuth();
+      }
+
+      // Ejecutar debug al cargar la página
+      debugAuth();
     </script>
-</body>
+  </body>
 </html>
